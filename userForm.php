@@ -126,6 +126,8 @@
   }
   function checkValue($value)
   {
+    $value = trim($value);
+    $value = stripslashes($value);
     return htmlspecialchars($value);
   }
   function checkForm()
@@ -141,12 +143,7 @@
   ?>
 
   <!-- Make a form -->
-  <form class="formContainer" method="post" action="<?php if (checkForm()) {
-                                                      //mail($to, $subject, $content, $headers);
-                                                      echo $content;
-                                                    } else {
-                                                      echo htmlspecialchars($_SERVER["PHP_SELF"]);
-                                                    } ?>">
+  <form class="formContainer" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
     <div class="formItem">
       <span>Name*</span>
       <input class="input" type="text" name="name" value="<?php echo htmlspecialchars($name); ?>">
