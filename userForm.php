@@ -81,8 +81,6 @@
   $subject = "";
   $content = "Here's your info: " . $name . "<br>" . $email . "<br>" . $reason . "<br>" . $message . "<br>";
   $headers = " From : " . $from . "\r\n";
-  $headers .= "MIME-Version: 1.0\r\n";
-  $headers .= "Content-type: text/plain; charset=iso-8859-1\r\n";
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
