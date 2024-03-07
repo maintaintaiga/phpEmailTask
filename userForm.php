@@ -82,10 +82,7 @@
   $headers = " From : " . $from . "\r\n";
   $headers .= "MIME-Version: 1.0\r\n";
   $headers .= "Content-type: text/plain; charset=iso-8859-1\r\n";
-  ?>
 
-  <!-- Make input validations -->
-  <?php
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($_POST["name"])) {
@@ -107,22 +104,24 @@
     }
 
     if (empty($_POST["reason"])) {
-      $nameErr = "Reason is required";
+      $reasonErr = "Reason is required";
     } else {
-      $name = checkValue($_POST["reason"]);
+      $reason = checkValue($_POST["reason"]);
       if (!preg_match("/^[a-zA-Z-' ]*$/", $reason)) {
-        $nameErr = "Only letters and white space allowed";
+        $reasonErr = "Only letters and white space allowed";
       }
     }
 
     if (empty($_POST["message"])) {
-      $nameErr = "Message is required";
+      $messageErr = "Message is required";
     } else {
-      $name = checkValue($_POST["message"]);
+      $message = checkValue($_POST["message"]);
       if (!preg_match("/^[a-zA-Z-' ]*$/", $message)) {
-        $nameErr = "Only letters and white space allowed";
+        $messageErr = "Only letters and white space allowed";
       }
     }
+
+    submitForm($to, $subject, $content, $headers);
   }
   function checkValue($value)
   {
@@ -130,14 +129,14 @@
     $value = stripslashes($value);
     return htmlspecialchars($value);
   }
-  function checkForm()
+  function submitForm($to, $subject, $content, $headers)
   {
     $anyErrors = empty($nameErr) && empty($emailErr) && empty($reasonErr) && empty($messageErr);
     $emptyInputs = empty($name) || empty($email) || empty($reason) || empty($message);
     if ($anyErrors || !$emptyInputs) {
-      return true;
+      mail($to, $subject, $content, $headers);
     } else {
-      return false;
+      echo htmlspecialchars($_SERVER['PHP_SELF']);
     }
   }
   ?>
