@@ -72,6 +72,7 @@
 <body>
   <!-- Set up variables -->
   <?php
+  $formSent = false;
   $name = $email = $reason = $message = "";
   $nameErr = $emailErr = $reasonErr = $messageErr = "";
   $formErr = false;
@@ -121,23 +122,21 @@
       }
     }
 
-    submitForm($to, $subject, $content, $headers);
+    $anyErrors = empty($nameErr) && empty($emailErr) && empty($reasonErr) && empty($messageErr);
+    $emptyInputs = empty($name) || empty($email) || empty($reason) || empty($message);
+    if ($anyErrors || !$emptyInputs) {
+      mail($to, $subject, $content, $headers);
+      $name = $email = $reason = $message = "";
+      $formSent = true;
+    } else {
+      echo htmlspecialchars($_SERVER['PHP_SELF']);
+    }
   }
   function checkValue($value)
   {
     $value = trim($value);
     $value = stripslashes($value);
     return htmlspecialchars($value);
-  }
-  function submitForm($to, $subject, $content, $headers)
-  {
-    $anyErrors = empty($nameErr) && empty($emailErr) && empty($reasonErr) && empty($messageErr);
-    $emptyInputs = empty($name) || empty($email) || empty($reason) || empty($message);
-    if ($anyErrors || !$emptyInputs) {
-      mail($to, $subject, $content, $headers);
-    } else {
-      echo htmlspecialchars($_SERVER['PHP_SELF']);
-    }
   }
   ?>
 
@@ -163,6 +162,9 @@
       <textarea class="input" name="message" rows="10"><?php echo htmlspecialchars($message); ?></textarea>
       <span class="error"><?php echo $messageErr; ?></span>
     </div>
+    <h6><?php if ($formSent) {
+          echo "Form Sent!";
+        } ?></h6>
     <input type="submit" name="submit" value="Submit">
     <span>*required</span>
   </form>
