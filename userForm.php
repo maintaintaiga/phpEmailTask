@@ -122,7 +122,7 @@
 
     $anyErrors = empty($nameErr) && empty($emailErr) && empty($reasonErr) && empty($messageErr);
     $emptyInputs = empty($name) || empty($email) || empty($reason) || empty($message);
-    if ($anyErrors || !$emptyInputs) {
+    if ($anyErrors && !$emptyInputs) {
       mail($to, $subject, $content, $headers);
       $name = $email = $reason = $message = "";
       $formSent = true;
