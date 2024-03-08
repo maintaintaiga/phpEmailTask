@@ -123,11 +123,12 @@
     $anyErrors = empty($nameErr) && empty($emailErr) && empty($reasonErr) && empty($messageErr);
     $emptyInputs = empty($name) || empty($email) || empty($reason) || empty($message);
     if ($anyErrors && !$emptyInputs) {
-      mail($to, $subject, $content, $headers);
+      //mail($to, $subject, $content, $headers);
       $name = $email = $reason = $message = "";
       $formSent = true;
     } else {
       echo htmlspecialchars($_SERVER['PHP_SELF']);
+      $formSent = false;
     }
   }
   function checkValue($value)
