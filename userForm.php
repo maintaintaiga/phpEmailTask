@@ -77,10 +77,10 @@
   $nameErr = $emailErr = $reasonErr = $messageErr = "";
   $formErr = false;
   $from = "a valid email";
-  $to = "";
-  $subject = "";
-  $content = "Here's your info: " . $name . "<br>" . $email . "<br>" . $reason . "<br>" . $message . "<br>";
-  $headers = " From : " . $from . "\r\n";
+  $to = "test";
+  $subject = "test";
+  $content = "Here's your info: " . $name . "<br>" . $email . "<br>" . $reason . "<br>" . $message;
+  $headers = " From : " . $from;
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -160,9 +160,9 @@
       <textarea class="input" name="message" rows="10"><?php echo htmlspecialchars($message); ?></textarea>
       <span class="error"><?php echo $messageErr; ?></span>
     </div>
-    <h6><?php if ($formSent) {
+    <h4><?php if ($formSent) {
           echo "Form Sent!";
-        } ?></h6>
+        } ?></h4>
     <input type="submit" name="submit" value="Submit">
     <span>*required</span>
   </form>
